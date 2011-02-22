@@ -14,6 +14,21 @@ The easiest way of getting started with workling is like this:
 If you're on an older Rails version, there's also a subversion mirror wor workling (I'll do my best to keep it synched) at:
 
     script/plugin install http://svn.playtype.net/plugins/workling/
+## New writing way for workers
+
+This is another way for writing background job, and don't need write worker. acts_as_background support ActiveRecord::Base class method.
+
+  class Cow < ActiveRecord::Base
+    def self.moo
+      5.times do
+        logger.info Time.now.to_i
+        logger.info "about to moo."
+        sleep 5
+      end
+    end
+    acts_as_background :moo
+
+  end
 
 ## Writing and calling Workers
 
