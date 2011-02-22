@@ -127,6 +127,12 @@ You can also set sleep time for each Worker. See the key 'listeners' for this. P
       sleep_time: 2
       reset_time: 30
       
+If you use carrot work with rabbitMQ you should set config like this:
+    development:
+       host: lcoalhost
+       port: 5576
+       namespace: railsapp_development
+
 Note that you can cluster Starling instances by passing a comma separated list of values to 
         
 Sleep time determines the wait time between polls against polls. A single poll will do one .get on every queue (there is a corresponding queue for each worker method).
@@ -181,6 +187,29 @@ Then start the workling Client:
 
 You're good. 
 
+# Using Carrot
+
+Carrot is a A synchronous amqp client. Based on Aman's amqp client. Use this if you want RabbitMQ work with unicorn.
+
+Once you've installed RabbitMQ, install the carrot library:
+
+    gem sources -a http://gems.github.com/ (if necessary)
+    sudo gem install carrot
+
+then configure configure your application to use carrot by adding this:
+
+    Workling::Remote.invoker = Workling::Remote::Invokers::CarrotSubscriber
+	Workling::Remote.dispatcher = Workling::Remote::Runners::ClientRunner.new
+	Workling::Remote.dispatcher.client = Workling::Clients::CarrotClient.new
+
+and config workling.yml:
+    development:
+      host: localhost
+      namespace: railsapp_development
+
+Then start the workling Client:
+    1 ./script/workling_client start
+
 # Using RudeQueue
 
 RudeQueue is a Starling-like Queue that runs on top of your database and requires no extra processes. Use this if you don't need very fast job processing and want to avoid managing the extra process starling requires.
@@ -201,6 +230,8 @@ Now start the Workling Client:
     1 ./script/workling_client start
     
 You're good.
+
+
 
 # Using BackgroundJob
 
