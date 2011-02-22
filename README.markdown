@@ -18,17 +18,16 @@ If you're on an older Rails version, there's also a subversion mirror wor workli
 
 This is another way for writing background job, and don't need write worker. acts_as_background support ActiveRecord::Base class method.
 
-  class Cow < ActiveRecord::Base
-    def self.moo
-      5.times do
-        logger.info Time.now.to_i
-        logger.info "about to moo."
-        sleep 5
+    class Cow < ActiveRecord::Base
+      def self.moo
+        5.times do
+          logger.info Time.now.to_i
+          logger.info "about to moo."
+          sleep 5
+        end
       end
+      acts_as_background :moo
     end
-    acts_as_background :moo
-
-  end
 
 ## Writing and calling Workers
 
