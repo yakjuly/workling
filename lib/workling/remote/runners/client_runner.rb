@@ -35,7 +35,7 @@ module Workling
           # not available there. 
           @connected ||= self.class.client.connect
           
-          self.class.client.request(@@routing.queue_for(clazz, method), options)    
+          self.class.client.request(@@routing.queue_for(clazz, method), options)
           
           return nil
         end

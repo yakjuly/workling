@@ -27,6 +27,7 @@ require "workling/routing/class_and_method_routing"
 require "workling/remote/invokers/basic_poller"
 require "workling/remote/invokers/threaded_poller"
 require "workling/remote/invokers/eventmachine_subscriber"
+require "workling/remote/invokers/carrot_subscriber"
 require "workling/remote"
 require "workling/remote/runners/not_remote_runner"
 require "workling/remote/runners/spawn_runner"
@@ -35,6 +36,7 @@ require "workling/remote/runners/client_runner"
 require "workling/remote/runners/backgroundjob_runner"
 require "workling/return/store/memory_return_store"
 require "workling/return/store/starling_return_store"
+require "workling/clients/carrot_client"
 require "mocks/client"
 require "clients/memory_queue_client"
 require "runners/thread_runner"
@@ -43,6 +45,7 @@ require "runners/thread_runner"
 Workling.load_path = ["#{ plugin_root }/test/workers"]
 Workling::Return::Store.instance = Workling::Return::Store::MemoryReturnStore.new
 Workling::Discovery.discover!
+
 
 # make this behave like production code
 Workling.raise_exceptions = false
