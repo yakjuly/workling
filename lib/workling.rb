@@ -140,6 +140,17 @@ module Workling
     end
   end
   
+  def self.try_acs_as_background
+    require 'fileutils'
+    filename = "background_worker.rb"
+    source = File.join(File.dirname(__FILE__), "workling", "acts_as_background", filename)
+    worker = File.join(RAILS_ROOT, "app", "workers", filename)
+    FileUtils.copy(source, worker) unless File.exists?(worker)
+    
+    require "workling/acts_as_background"
+    ActiveRecord::Base.send(:include, Workling::ActsAsBackground)
+  end
+  
   #
   #  Raises exceptions thrown inside of the worker. normally, these are logged to 
   #  logger.error. it's easy to miss these log calls while developing, though. 
