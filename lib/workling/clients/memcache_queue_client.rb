@@ -15,7 +15,7 @@ module Workling
       
       # the class with which the connection is instantiated
       cattr_accessor :memcache_client_class
-      @@memcache_client_class ||= ::MemCache
+      @@memcache_client_class ||= Object.const_defined?(:MemCache) ? ::MemCache : nil
       
       # the url with which the memcache client expects to reach starling
       attr_accessor :queueserver_urls
